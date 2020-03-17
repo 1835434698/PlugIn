@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVer
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVer
+        targetSdkVersion rootProject.ext.targetSdkVer
+        applicationId "jianqiang.com.plugin2"
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api "com.android.support:appcompat-v7:$supportLibraryVersion"
+    api project(path: ':mypluginlibrary')
+}
+
+assemble.doLast {
+    android.applicationVariants.all { variant ->
+        // Copy Release artifact to HostApp's assets and rename
+        if (variant.name == "release") {
+            variant.outputs.each { output ->
+                File originFile = output.outputFile
+                println originFile.absolutePath
+                copy {
+                    from originFile
+                    into "$rootDir/app/src/main/assets"
+                    rename(originFile.name, "plugin2.apk")
+                }
+            }
+        }
+    }
+}

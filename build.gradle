@@ -1,0 +1,51 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.1'
+        
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    //公共属性，包括依赖包统一引用
+    /**
+     * 最小版本
+     */
+    minSdkVer = 21
+    /**
+     * 目标版本
+     */
+    targetSdkVer = 28
+    /**
+     * 编译sdk版本
+     */
+    compileSdkVer = 28
+//    /**
+//     * 编译工具版本
+//     */
+//    buildToolsVer = "28.0.3"
+    /**
+     * 编译引用包版本
+     */
+    supportLibraryVersion ="28.0.0"
+}
